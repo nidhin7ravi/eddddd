@@ -7,13 +7,7 @@ assembly.add_step('hevc_encoded','/video/encode', {
     'use': ':original',
     'result': True,
     'ffmpeg_stack': 'v3.3.3',
-    'preset': 'hevc',
-    'width': 1920,
-    'height': 1080,
-    "ffmpeg": {
-        "crf": 30,
-        "preset": "placebo",
-    }
+    'preset': 'hevc'
 })
 assembly.add_step('exported','/file/compress', {
     'use': ['hevc_encoded', ':original'],
@@ -23,5 +17,5 @@ assembly.add_step('exported','/file/compress', {
 })
 
 assembly.add_file(open('./Super.mp4', 'rb'))
-assembly_response = assembly.create(retries=5, wait=True)
+assembly_response = assembly.create(retries=5, wait=False)
 print(assembly_response.data)
